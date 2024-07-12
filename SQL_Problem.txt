@@ -1,0 +1,285 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.29 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employee           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| web16db            |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> use employee;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table employee(
+    ->
+    -> empid int NOT NULL,
+    -> empFname varchar(25) NOT NULL,
+    -> empLname varchar(25),
+    -> department varchar(25),
+    -> project varchar(25) NOT NULL,
+    -> address varchar(75) NOT NULL,
+    -> dob data NOT NULL,
+    -> gender varchar(10) NOT NULL,
+    -> salary int NOT NULL
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'data NOT NULL,
+gender varchar(10) NOT NULL,
+salary int NOT NULL
+)' at line 9
+mysql> create table employee(
+    ->
+    -> empid int NOT NULL,
+    -> empFname varchar(25) NOT NULL,
+    -> empLname varchar(25),
+    -> department varchar(25),
+    -> project varchar(25) NOT NULL,
+    -> address varchar(75) NOT NULL,
+    -> dob date NOT NULL,
+    -> gender varchar(25) NOT NULL,
+    -> salary int NOT NULL
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_employee |
++--------------------+
+| employee           |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee;
+Empty set (0.01 sec)
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empid      | int         | NO   |     | NULL    |       |
+| empFname   | varchar(25) | NO   |     | NULL    |       |
+| empLname   | varchar(25) | YES  |     | NULL    |       |
+| department | varchar(25) | YES  |     | NULL    |       |
+| project    | varchar(25) | NO   |     | NULL    |       |
+| address    | varchar(75) | NO   |     | NULL    |       |
+| dob        | date        | NO   |     | NULL    |       |
+| gender     | varchar(25) | NO   |     | NULL    |       |
+| salary     | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> alter table employee add primary key(empid);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> dese employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dese employee' at line 1
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empid      | int         | NO   | PRI | NULL    |       |
+| empFname   | varchar(25) | NO   |     | NULL    |       |
+| empLname   | varchar(25) | YES  |     | NULL    |       |
+| department | varchar(25) | YES  |     | NULL    |       |
+| project    | varchar(25) | NO   |     | NULL    |       |
+| address    | varchar(75) | NO   |     | NULL    |       |
+| dob        | date        | NO   |     | NULL    |       |
+| gender     | varchar(25) | NO   |     | NULL    |       |
+| salary     | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+| empid | empFname | empLname | department | project | address         | dob        | gender | salary |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+|     1 | sanjay   | mehra    | hr         | p1      | hyderabad (hyd) | 1976-12-01 | m      |  50000 |
+|     2 | ananya   | mishra   | admin      | p2      | delhi (del)     | 1968-05-02 | f      |  75000 |
+|     3 | rohan    | divan    | acount     | p1      | mumbai (bom)    | 1980-05-23 | m      |  90000 |
+|     4 | soni     | patel    | hr         | p3      | hydrabad (hyd)  | 1992-05-23 | f      |  50000 |
+|     5 | priya    | thakur   | department | p2      | banglor (bang)  | 1968-05-23 | f      | 100000 |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee department = "hr";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= "hr"' at line 1
+
+1.Display details of employees in the HR department only.
+==========================================================
+
+mysql> select * from employee where department ="hr";
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+| empid | empFname | empLname | department | project | address         | dob        | gender | salary |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+|     1 | sanjay   | mehra    | hr         | p1      | hyderabad (hyd) | 1976-12-01 | m      |  50000 |
+|     4 | soni     | patel    | hr         | p3      | hydrabad (hyd)  | 1992-05-23 | f      |  50000 |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+2 rows in set (0.00 sec)
+
+==================================================================================
+2.List number of female employees.
+
+-----------------------------------------------
+
+mysql> select * from employee where department ="f";
+Empty set (0.00 sec)
+
+mysql> select * from employee where gender = "f";
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empFname | empLname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     2 | ananya   | mishra   | admin      | p2      | delhi (del)    | 1968-05-02 | f      |  75000 |
+|     4 | soni     | patel    | hr         | p3      | hydrabad (hyd) | 1992-05-23 | f      |  50000 |
+|     5 | priya    | thakur   | department | p2      | banglor (bang) | 1968-05-23 | f      | 100000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+3 rows in set (0.00 sec)
+
+=============================================================================================================
+3. Display all female HR employees.
+
+
+
+
+mysql> select * from employee where (gender = "f" and department = "hr");
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empFname | empLname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     4 | soni     | patel    | hr         | p3      | hydrabad (hyd) | 1992-05-23 | f      |  50000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+1 row in set (0.00 sec)
+
+=======================================================================================================
+4.Display all the names whose name starts with vowels
+--------------------------------------------
+mysql> select * from employee where (empFname  like 'a%' or empFname  like 'e%' or empFname  like 'i%' or empFname  like 'o%' or empFname  like 'u%');
++-------+----------+----------+------------+---------+-------------+------------+--------+--------+
+| empid | empFname | empLname | department | project | address     | dob        | gender | salary |
++-------+----------+----------+------------+---------+-------------+------------+--------+--------+
+|     2 | ananya   | mishra   | admin      | p2      | delhi (del) | 1968-05-02 | f      |  75000 |
++-------+----------+----------+------------+---------+-------------+------------+--------+--------+
+1 row in set (0.00 sec)
+=======================================================================================================
+
+
+5.List all the males whose name has a vowel as the 2nd character.
+------------------------------------------------------------
+mysql> select * from employee where (empFname  like '_a%' or empFname  like '_e%' or empFname  like '_i%' or empFname  like '_o%' or empFname  like '_u%');
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+| empid | empFname | empLname | department | project | address         | dob        | gender | salary |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+|     1 | sanjay   | mehra    | hr         | p1      | hyderabad (hyd) | 1976-12-01 | m      |  50000 |
+|     3 | rohan    | divan    | acount     | p1      | mumbai (bom)    | 1980-05-23 | m      |  90000 |
+|     4 | soni     | patel    | hr         | p3      | hydrabad (hyd)  | 1992-05-23 | f      |  50000 |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+3 rows in set (0.00 sec)
+
+=======================================================
+
+6.Name of all departments
+-------------------------------------------------------------------
+mysql> select department from employee;
++------------+
+| department |
++------------+
+| hr         |
+| admin      |
+| acount     |
+| hr         |
+| department |
++------------+
+
+=================================================================
+
+
+7.all the female employees earning less than 75000.
+=============================================
+
+mysql> select * from employee where salary < 75000;
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+| empid | empFname | empLname | department | project | address         | dob        | gender | salary |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+|     1 | sanjay   | mehra    | hr         | p1      | hyderabad (hyd) | 1976-12-01 | m      |  50000 |
+|     4 | soni     | patel    | hr         | p3      | hydrabad (hyd)  | 1992-05-23 | f      |  50000 |
++-------+----------+----------+------------+---------+-----------------+------------+--------+--------+
+2 rows in set (0.00 sec)
+
+============================================================================
+8.count number of employees earning between 50k and 1 lakh.
+-------------------------------------------------------------------
+
+mysql> select count(empid) from employee where (salary>50000 and salary<100000);
++--------------+
+| count(empid) |
++--------------+
+|            2 |
++--------------+
+1 row in set (0.00 sec)
+
+
+=======================================================================
+9.count the number of projects.
+-------------------------------------------------
+
+mysql> select count(project) from employee;
++----------------+
+| count(project) |
++----------------+
+|              5 |
++----------------+
+1 row in set (0.00 sec)
+
+
+10.Department wise count of employees.
+-----------------------------------------------------
+
+mysql> select count(department) from employee;
++-------------------+
+| count(department) |
++-------------------+
+|                 5 |
++-------------------+
+1 row in set (0.00 sec)
+
+
+
+
+=============================================================================
+Q2.
+
+------------------------------
+1. What is the difference between a Unique Key and Primary Key?
+
+primary key ==>
+      1 - primary key is table lable key;
+      2 - One table one primary key onlay;
+
+
+Unique key ==> 
+    1 - uniqe key column lavel key;
+    2 - uniqe key multiple in a table;      
+
+
+
+
+2.SQL is a case-sensitive language. (True or False)
+
+ans => False ;

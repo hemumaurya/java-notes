@@ -1,0 +1,32 @@
+  ==>> Write the steps involved in connecting any java application with the database using JDBC 
+
+  1=>	Import the Packages
+  2=>   Load the drivers using the forName() method 
+  3=>     Register the drivers using DriverManager 
+  4=>      Establish a connection using the Connection class object
+   5=>     Create a statement
+  6=>      Execute the query
+   7=>     CLose the connections
+
+
+
+satement => 
+   1 = >  Used for executing simple SQL statements like CRUD (create, retrieve, update and delete
+
+   2 =>  Statement interface cannot accept parameters at run time.
+
+   3 => Statement is suitable for executing DDL commands – CREATE, drop, alter and truncate
+
+
+
+PreparedStatement=>  
+    1 => Used for executing dynamic and pre-compiled SQL statements
+
+    2 => PreparedStatement interface accepts input parameters at runtime.
+
+    3 =>PreparedStatement is suitable for executing DML commands – SELECT, INSERT, UPDATE and DELETE
+
+
+
+
+	
